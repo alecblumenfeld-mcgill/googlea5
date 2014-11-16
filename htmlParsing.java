@@ -37,7 +37,7 @@ public class htmlParsing {
               URLConnection Conn;
               URL u= new URL(url);
               Conn  = u.openConnection();
-	      	      System.out.println("Opening "+url); 
+	      	      //System.out.println("Opening "+url); 
               myURL  = new BufferedReader(new InputStreamReader(Conn.getInputStream()));
               
 	      //            myURL = new BufferedReader( new FileReader( filename ) );

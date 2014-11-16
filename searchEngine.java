@@ -43,6 +43,7 @@ public class searchEngine {
 
 		String s = i.next();
 		internet.addEdge(url, s);
+		internet.setPageRank(s ,1);
 		internet.visited.put(url, true);
 		traverseInternet(s);
 
@@ -95,7 +96,32 @@ public class searchEngine {
     */
     void computePageRanks() {
 	/* WRITE YOUR CODE HERE */
-	
+		LinkedList<String> vert = new LinkedList<String>();
+		vert = this.internet.getVertices();
+		Iterator<String> i = vert.iterator();
+		while(i.hasNext()){
+
+		String s = i.next();
+
+		double pageRank =.5;
+		double sumation =0.0;
+		LinkedList<String> neighbours = internet.getNeighbors(s);
+		Iterator<String> n = neighbours.iterator();
+		System.out.println("neighbours of "+ s + "  :" +neighbours);
+			while(n.hasNext()){
+				String next =n.next();
+				double  PRw = internet.getPageRank(next);
+				double  Cw = internet.getNeighbors(next).size();
+				sumation = sumation + (PRw/Cw);
+				System.out.println(PRw+ "PRW  /" +(Cw) + "(Cw)");
+				//System.out.println((PRw/Cw) + "(PRw/Cw)");
+				
+
+				//pageRank=0.5*(internet.getPageRank(n.next())/internet.getNeighbors(n.next()).size());
+			}
+		this.internet.setPageRank(s,pageRank+(0.5*sumation));
+
+		}
     } // end of computePageRanks
     
 	
@@ -123,9 +149,11 @@ public class searchEngine {
 	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
 	
 	// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING
+	mySearchEngine.computePageRanks();
+	mySearchEngine.computePageRanks();
+
 	System.out.println(mySearchEngine);
 	
-	mySearchEngine.computePageRanks();
 	
 	BufferedReader stndin = new BufferedReader(new InputStreamReader(System.in));
 	String query;

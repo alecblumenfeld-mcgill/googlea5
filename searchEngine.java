@@ -106,7 +106,7 @@ public class searchEngine {
 		double pageRank =.5;
 		double sumation =0.0;
 		LinkedList<String> neighbours = internet.getNeighbors(s);
-		Iterator<String> n = neighbours.iterator();
+		Iterator<String> n = neighbours.iterator(); 
 		System.out.println("neighbours of "+ s + "  :" +neighbours);
 			while(n.hasNext()){
 				String next =n.next();

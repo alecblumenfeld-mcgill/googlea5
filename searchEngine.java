@@ -40,8 +40,8 @@ public class searchEngine {
 
 	this.wordIndex.put(url, siteContrent);
 	while(i.hasNext()){
-
 		String s = i.next();
+
 		internet.addEdge(url, s);
 		internet.setPageRank(s ,1);
 		internet.visited.put(url, true);
@@ -96,32 +96,41 @@ public class searchEngine {
     */
     void computePageRanks() {
 	/* WRITE YOUR CODE HERE */
+	for (int x =0 ; x<100 ;x++ ) {
 		LinkedList<String> vert = new LinkedList<String>();
 		vert = this.internet.getVertices();
 		Iterator<String> i = vert.iterator();
+		
+			
+		
 		while(i.hasNext()){
 
 		String s = i.next();
-
-		double pageRank =.5;
+		//System.out.println(s);
+		double pageRank = this.internet.getPageRank(s);
 		double sumation =0.0;
-		LinkedList<String> neighbours = internet.getNeighbors(s);
+		LinkedList<String> neighbours = internet.getEdgesInto(s);
 		Iterator<String> n = neighbours.iterator(); 
-		System.out.println("neighbours of "+ s + "  :" +neighbours);
+
 			while(n.hasNext()){
-				String next =n.next();
+				String next = n.next();
 				double  PRw = internet.getPageRank(next);
-				double  Cw = internet.getNeighbors(next).size();
+				double  Cw = internet.getOutDegree(next);
+				if (Cw ==0) {
+					Cw =1;
+				}
 				sumation = sumation + (PRw/Cw);
-				System.out.println(PRw+ "PRW  /" +(Cw) + "(Cw)");
+
+				// System.out.println(sumation);
 				//System.out.println((PRw/Cw) + "(PRw/Cw)");
 				
 
-				//pageRank=0.5*(internet.getPageRank(n.next())/internet.getNeighbors(n.next()).size());
 			}
+		// System.out.println("RANK: " +(pageRank+(0.5*sumation)));
 		this.internet.setPageRank(s,pageRank+(0.5*sumation));
-
+			
 		}
+	}
     } // end of computePageRanks
     
 	
@@ -133,8 +142,11 @@ public class searchEngine {
        This method should take about 25 lines of code.
     */
     String getBestURL(String query) {
-	/* WRITE YOUR CODE HERE */
-
+	Map<String, LinkedList<String> > map = this.wordIndex;
+	Iterator<Map.Entry<String, LinkedList<String>> > entries = map.entrySet().iterator();
+	for (Map.Entry<String, LinkedList<String> > entry : map.entrySet()) {
+			System.out.println("FOUND Key = " + entry.getKey() + ", Value = " + entry.getValue() + "query results " +this.wordIndex.containsValue(query));
+	}
 	return null; // remove this
     } // end of getBestURL
     
@@ -144,13 +156,13 @@ public class searchEngine {
 	searchEngine mySearchEngine = new searchEngine();
 	// to debug your program, start with.
 	//	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
-	
+		mySearchEngine.computePageRanks();
+
 	// When your program is working on the small example, move on to
 	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
-	
+			mySearchEngine.computePageRanks();
+
 	// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING
-	mySearchEngine.computePageRanks();
-	mySearchEngine.computePageRanks();
 
 	System.out.println(mySearchEngine);
 	

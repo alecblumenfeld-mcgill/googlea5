@@ -50,7 +50,7 @@ class directedGraph {
         return vertices.get(v);
     } // end of getNeighbors
     
-    
+            
     // Returns a LinkedList of all vertices in the graph
     public LinkedList<String> getVertices() {
         Iterator<String> i = vertices.keySet().iterator();

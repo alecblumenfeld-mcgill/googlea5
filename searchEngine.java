@@ -31,7 +31,8 @@ public class searchEngine {
     
     void traverseInternet(String url) throws Exception {
 	/* WRITE SOME CODE HERE */
-	if (htmlParsing.queriedURL_links.containsKey(url)){
+	/* WRITE SOME CODE HERE */
+if (htmlParsing.queriedURL_links.containsKey(url)){
 	 		return;
 	}
 	LinkedList<String>  site = htmlParsing.getLinks(url);
@@ -43,46 +44,12 @@ public class searchEngine {
 	while(i.hasNext()){
 		
 		  String s = i.next();
-		  System.out.println(s);
 		  internet.addEdge(url, s);
 		 internet.setPageRank(s ,1);
 		 internet.visited.put(url, true);
 		traverseInternet(s);
 
 	}
-
-	// for (int x=0; x < site.size() ; x++ ) {
-	// 	if (htmlParsing.queriedURL_links.containsKey(url)){
-	// 		continue;
-	// 	}
-	// 	System.out.println("url:"+url+"\n"+"next :"+ htmlParsing.getLinks(url));
-	// 	internet.addEdge(url, htmlParsing.getLinks(url));
-	// 	traverseInternet(site.get(x));
-		
-	// }
-	//directedGraph();
-	// while((htmlParsing.getLinks(url)){
-
-	// }
-	/* Hints
-
-	   0) This should take about 50-70 lines of code (or less)
-	   1) To parse the content of the url, call
-	   htmlParsing.getContent(url), which returns a LinkedList of Strings 
-	   containing all the words at the given url. Also call htmlParsing.getLinks(url).
-	   and assign their results to a LinkedList of Strings.
-	   2) To iterate over all elements of a LinkedList, use an Iterator,
-	   as described in the text of the assignment
-	   3) Refer to the description of the LinkedList methods at
-	   http://docs.oracle.com/javase/6/docs/api/ .
-	   You will most likely need to use the methods contains(String s), 
-	   addLast(String s), iterator()
-	   4) Refer to the description of the HashMap methods at
-	   http://docs.oracle.com/javase/6/docs/api/ .
-	   You will most likely need to use the methods containsKey(String s), 
-	   get(String s), put(String s, LinkedList l).  
-	*/
-	
 	
 	
     } // end of traverseInternet
@@ -170,7 +137,7 @@ public class searchEngine {
 	//	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
 
 	// When your program is working on the small example, move on to
-	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/index.html");
+	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca");
 	mySearchEngine.computePageRanks();
 
 	// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING

@@ -37,15 +37,16 @@ public class searchEngine {
 	LinkedList<String>  site = htmlParsing.getLinks(url);
 	Iterator<String> i = site.iterator();
 	LinkedList<String>  siteContrent = htmlParsing.getContent(url);
-
+	internet.addVertex(url);
+	internet.visited.put(url, true);
 	this.wordIndex.put(url, siteContrent);
 	while(i.hasNext()){
 		
-		String s = i.next();
-		internet.addVertex(s);
-		internet.addEdge(url, s);
-		internet.setPageRank(s ,1);
-		internet.visited.put(url, true);
+		  String s = i.next();
+		  System.out.println(s);
+		  internet.addEdge(url, s);
+		 internet.setPageRank(s ,1);
+		 internet.visited.put(url, true);
 		traverseInternet(s);
 
 	}
@@ -101,13 +102,8 @@ public class searchEngine {
 		LinkedList<String> vert = new LinkedList<String>();
 		vert = this.internet.getVertices();
 		Iterator<String> i = vert.iterator();
-		
-			
-		
 		while(i.hasNext()){
-
 		String s = i.next();
-		//System.out.println(s);
 		double pageRank = this.internet.getPageRank(s);
 		double sumation =0.0;
 		LinkedList<String> neighbours = internet.getEdgesInto(s);
@@ -117,18 +113,18 @@ public class searchEngine {
 				String next = n.next();
 				double  PRw = internet.getPageRank(next);
 				double  Cw = internet.getOutDegree(next);
-				if (Cw ==0) {
-					Cw =1;
-				}
 				sumation = sumation + (PRw/Cw);
+				//System.out.println("s"+s +"   "+next +"  PR:" +PRw +"  c:" +Cw+" Sum"+sumation);
+
 
 				// System.out.println(sumation);
 				//System.out.println((PRw/Cw) + "(PRw/Cw)");
 				
 
 			}
+			//System.out.println(sumation);
 		// System.out.println("RANK: " +(pageRank+(0.5*sumation)));
-		this.internet.setPageRank(s,pageRank+(0.5*sumation));
+		this.internet.setPageRank(s,.5+(0.5*sumation));
 			
 		}
 	}
@@ -161,7 +157,7 @@ public class searchEngine {
 			top =current;
 		}
 	}
-
+	System.out.println(top);
 
 	return top; // remove this
     } // end of getBestURL
@@ -174,12 +170,12 @@ public class searchEngine {
 	//	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
 
 	// When your program is working on the small example, move on to
-	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/~blanchem/250/a.html");
+	mySearchEngine.traverseInternet("http://www.cs.mcgill.ca/index.html");
 	mySearchEngine.computePageRanks();
 
 	// this is just for debugging purposes. REMOVE THIS BEFORE SUBMITTING
 
-	//System.out.println(mySearchEngine);
+	System.out.println(mySearchEngine);
 	
 	
 	BufferedReader stndin = new BufferedReader(new InputStreamReader(System.in));
